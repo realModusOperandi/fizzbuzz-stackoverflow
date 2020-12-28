@@ -18,6 +18,18 @@ application {
     mainClass.set("fizzbuzz.so.App")
 }
 
+tasks.jar {
+    manifest {
+        attributes(
+            Pair("Main-Class", "fizzbuzz.so.App")
+        )
+    }
+
+    from (
+        Callable { configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) } }
+    )
+}
+
 tasks.test {
     useJUnitPlatform()
 }
