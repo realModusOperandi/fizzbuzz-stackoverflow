@@ -31,6 +31,7 @@ jobs:
         path: app/build/libs/app.jar
 
   run:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Set up JDK 11
