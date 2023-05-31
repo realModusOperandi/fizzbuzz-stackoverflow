@@ -65,6 +65,7 @@ public class App {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(sourceFile));
                         String fileContents = "package " + packageName + ";\n" +
                                 answer;
+                        System.out.println("COMPILING FILE:\n" + fileContents);
                         writer.write(fileContents);
                         writer.flush();
 
@@ -73,9 +74,10 @@ public class App {
 
                         URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { new File(strTmp).toURI().toURL() });
                         Class<?> cls = Class.forName(packageName + "." + className, true, classLoader);
-                        Object instance = cls.getDeclaredConstructor().newInstance();
                         Method main = cls.getMethod("main", String[].class);
-                        main.invoke(instance, (Object) new String[] {});
+
+                        System.out.println("RUNNING FILE:");
+                        main.invoke(null, (Object) new String[] {});
 
                         break outer;
                     }
